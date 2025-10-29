@@ -1,0 +1,88 @@
+div {
+    width: 60px;
+    border: solid 2px black;
+    position: absolute;
+    height: 300px;
+    background-color: white;
+}
+
+.sharps {
+    width: 30px;
+    height: 150px;
+    background: black;
+}
+
+div:hover {
+    background-color: beige;
+    cursor: pointer;
+}
+
+.sharps:hover {
+    background-color: rgb(63, 63, 63);
+}
+
+.sharps:active {
+    border-style: inset;
+}
+
+
+/* Main Keys */
+#c {
+    top: 100px;
+    left: 100px;
+}
+
+#d {
+    top: 100px;
+    left: 162px;
+}
+
+#e {
+    top: 100px;
+    left: 224px;
+}
+
+#f {
+    top: 100px;
+    left: 285px;
+}
+
+#g {
+    top: 100px;
+    left: 347px;
+}
+
+#a {
+    top: 100px;
+    left: 409px;
+}
+
+#b {
+    top: 100px;
+    left: 471px;
+}
+
+/* Sharp Keys */
+#cS {
+    top: 100px;
+    left: 145px;
+}
+#dS {
+    top: 100px;
+    left: 208px;
+}
+
+#fS {
+    top:100px;
+    left: 331px;
+}
+
+#gS {
+    top:100px;
+    left: 393px;
+}
+
+#aS {
+    top:100px;
+    left: 455px;
+}
