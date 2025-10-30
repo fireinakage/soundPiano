@@ -1,45 +1,138 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="styles.css">
-        <title>Sound Piano</title>
-        <link rel="icon" type="image/png" href="favicon.png">
-    </head>
-    <body>
-        <div id="c" onmousedown="playNote(c4)"></div>
-        <div id="d" onmousedown="playNote(d4)"></div>
-        <div id="e" onmousedown="playNote(e4)"></div>
-        <div id="f" onmousedown="playNote(f4)"></div>
-        <div id="g" onmousedown="playNote(g4)"></div>
-        <div id="a" onmousedown="playNote(a4)"></div>
-        <div id="b" onmousedown="playNote(b4)"></div>
-        <div id="cS" class="sharps" onmousedown="playNote(cs4)"></div>
-        <div id="dS" class="sharps" onmousedown="playNote(ds4)"></div>
-        <div id="fS" class="sharps" onmousedown="playNote(fs4)"></div>
-        <div id="gS" class="sharps" onmousedown="playNote(gs4)"></div>
-        <div id="aS" class="sharps" onmousedown="playNote(as4)"></div>
 
-        <script>
-            // White Keys
-            const c4 = new Audio("sounds/C4.mp3")
-            const d4 = new Audio("sounds/D4.mp3")
-            const e4 = new Audio("sounds/E4.mp3")
-            const f4 = new Audio("sounds/F4.mp3")
-            const g4 = new Audio("sounds/G4.mp3")
-            const a4 = new Audio("sounds/A4.mp3")
-            const b4 = new Audio("sounds/B4.mp3")
-            
-            // Black Keys
-            const cs4 = new Audio("sounds/Db4.mp3")
-            const ds4 = new Audio("sounds/Eb4.mp3")
-            const fs4 = new Audio("sounds/Gb4.mp3")
-            const gs4 = new Audio("sounds/Ab4.mp3")
-            const as4 = new Audio("sounds/Bb4.mp3")
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Sound Piano</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
 
-            function playNote(note) {
-                note.pause()
-                note.currentTime = 0;
-                note.play()
+<body>
+    <div id="c" onmousedown="playNote(c4)"></div>
+    <div id="d" onmousedown="playNote(d4)"></div>
+    <div id="e" onmousedown="playNote(e4)"></div>
+    <div id="f" onmousedown="playNote(f4)"></div>
+    <div id="g" onmousedown="playNote(g4)"></div>
+    <div id="a" onmousedown="playNote(a4)"></div>
+    <div id="b" onmousedown="playNote(b4)"></div>
+    <div id="cS" class="sharps" onmousedown="playNote(cs4)"></div>
+    <div id="dS" class="sharps" onmousedown="playNote(ds4)"></div>
+    <div id="fS" class="sharps" onmousedown="playNote(fs4)"></div>
+    <div id="gS" class="sharps" onmousedown="playNote(gs4)"></div>
+    <div id="aS" class="sharps" onmousedown="playNote(as4)"></div>
+    <button onclick="playSong()">Play</button>
+
+    <script>
+
+        class Chords {
+            constructor(noteOne, noteTwo, noteThree) {
+                this.noteOne = noteOne;
+                this.noteTwo = noteTwo;
+                this.noteThree = noteThree;
             }
-        </script>
-    </body>
+
+            play() {
+                this.noteOne.currentTime = 0;
+                this.noteTwo.currentTime = 0;
+                this.noteThree.currentTime = 0;
+                this.noteOne.play();
+                this.noteTwo.play();
+                this.noteThree.play();
+            }
+        }
+        // White Keys
+        const c4 = new Audio("sounds/C4.mp3")
+        const d4 = new Audio("sounds/D4.mp3")
+        const e4 = new Audio("sounds/E4.mp3")
+        const f4 = new Audio("sounds/F4.mp3")
+        const g4 = new Audio("sounds/G4.mp3")
+        const a4 = new Audio("sounds/A4.mp3")
+        const b4 = new Audio("sounds/B4.mp3")
+
+        // Black Keys
+        const cs4 = new Audio("sounds/Db4.mp3")
+        const ds4 = new Audio("sounds/Eb4.mp3")
+        const fs4 = new Audio("sounds/Gb4.mp3")
+        const gs4 = new Audio("sounds/Ab4.mp3")
+        const as4 = new Audio("sounds/Bb4.mp3")
+
+        let CEG = new Chords(c4, e4, g4);
+        let CSFGS = new Chords(cs4, f4, gs4);
+        let DFA = new Chords(d4, f4, a4);
+        let DSFSA = new Chords(ds4, fs4, a4)
+        let EGB = new Chords(e4, g4, b4);
+
+        const soundArray = [CEG, CSFGS, DFA, DSFSA, EGB, c4, d4, e4, f4, g4, a4, b4, cs4, ds4, fs4, gs4, as4];
+
+
+        function playNote(note) {
+            note.pause()
+            note.currentTime = 0;
+            note.play()
+        }
+
+        function randomBgColor() {
+            // add code to randomize the document body style background color here
+        }
+        function playOne(soundArray, playThis) {
+            soundArray[playThis].play();
+            randomBgColor();
+        }
+
+        // play a 4 measure phrase of random sounds
+        function playRandomBeat(soundArray, quarterNote) {
+            // i is used to setTimeout. 250 is a quarter note
+            for (let i = 0; i <= quarterNote * 13; i += quarterNote) {
+                setTimeout(() => {
+                    playOne(soundArray, Math.floor(Math.random() * soundArray.length));
+                }, i);
+            }
+        }
+
+
+
+        function playBeat(soundArray, quarterNote) {
+            let temp = [
+                Math.floor(Math.random() * soundArray.length),
+                Math.floor(Math.random() * soundArray.length),
+                Math.floor(Math.random() * soundArray.length),
+                Math.floor(Math.random() * soundArray.length)
+            ];
+            setTimeout(() => {
+                playOne(soundArray, temp[0]);
+            }, quarterNote * 12);
+            // i is used to setTimeout. 250 is a quarter note, 1000 is a 4/4 measure
+            for (let i = 0; i <= quarterNote * 10; i = i + quarterNote * 4) {
+                setTimeout(() => {
+                    playOne(soundArray, temp[0]);
+                }, i);
+                setTimeout(() => {
+                    playOne(soundArray, temp[1]);
+                }, i + quarterNote);
+                setTimeout(() => {
+                    playOne(soundArray, temp[2]);
+                }, i + quarterNote * 2);
+                setTimeout(() => {
+                    playOne(soundArray, temp[3]);
+                }, i + quarterNote * 3);
+            }
+        }
+        function playSong() {
+            console.log('Played Chord')
+            let quarterNote = 250;
+            for (let loop = 0; loop <= quarterNote * 48; loop = loop + quarterNote * 16) {
+                let randomphrase = Math.floor(Math.random() * 4 + 1);
+                if (randomphrase <= 1) {
+                    setTimeout(() => {
+                        playRandomBeat(soundArray, quarterNote);
+                    }, loop);
+                } else {
+                    setTimeout(() => {
+                        playBeat(soundArray, quarterNote);
+                    }, loop);
+                }
+            }
+        }
+    </script>
+</body>
+
 </html>
